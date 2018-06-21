@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<!--
+A reimplementation of:
+ 
+A House of Dust reimplementation
+copyright (c) 2014 Nick Montfort <nickm@nickm.com>
+based on a 1967 program by Alison Knowles and James Tenney
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+Updated 10 March 2015 to remove a duplicate value in "place".
+Updated 17 November 2015 to remove a near-duplicate value in "inhabitants".
+Updated 18 November 2015 to add "IN A DESERT" & "ON OPEN GROUND" to "place".
+
+Adapted 2018 Logan Ramsay <words@loganramsay.com>
+
+-->
+<style type="text/css">
+/* <![CDATA[ */
+body {
+ background:url("https://images.pexels.com/photos/962095/pexels-photo-962095.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat fixed center; 
+ color:#ccc;
+ margin:0 0 0 19pt;
+ font-family:Optima, sans-serif;
+ font-size:19pt;
+}
+a {
+ color:#117;
+ text-decoration:none;
+}
+#main {
+ padding-top:18px;
+ width:70%;
+}
+#main div {
+ font-weight:bold;
+ padding-bottom:9px;
+}
+#info {
+ top:0;
+ right:0;
+ bottom:0;
+ position:absolute;A
+ height:100%;
+ width:45%;
+ color:#ccc;
+ background:url("https://images.pexels.com/photos/386148/pexels-photo-386148.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat; fixed; center center; 
+ margin-left:6px;
+ border-left:thin #000 solid;
+ border-bottom:thin #000 solid;
+ padding:9px;
+ font-size:80%
+}
+/* ]]> */
+</style>
+<script type="text/javascript">
+
+var t = 0,
+material = ['GLOAMING SAND', 'GLOWING DUST', 'PAPER LEAVES', 'JOURNAL PAPER', 'FOLDED TIN', 'DISTANT STARS', 'FRAYED LACE', 'GROWLING STONE', 'GULF DRILLED OIL', 'GLASS UNDER PRESSURE', 'WARPING STEEL', 'BITING PLASTIC', 'CLINGING MUD', 'GREEN BLOOD', 'UNBREAKABLE BEADS', 'ITCHY STRAW', 'COLD FIRE', 'SIDEWAYS WORDS', 'AMETHYST POINTS', 'TITANIUM ROPE', 'HELIUM CLOUD', 'MEANING', 'NATURE', 'GOLDEN FOG', 'COMPUTER KEYS', 'AI MIND', 'COFFEE', 'RELEASING COOL AID', 'ANTI-VIRUS VACINE', 'SPENT BLEACH', 'HAND-SHAPED BLISS BALLS', 'FREEDOM TEARS', 'FUTURE JUICE', 'DRY FISSION', 'COLD SLATE', 'BUBBLING CANDY', 'ROTTEN TIMBER', 'OPEN FIELDS', 'DIAZEPAM', 'MARZIPAN', 'PROVERBS', 'BAR ADVICE', 'STROBE LIGHT', 'CRUMBLING CHALK', 'FISH DREAMS', 'DAY OLD BREAD', 'CIGARETTE BUTTS', 'ANALYSED DATA', 'MOULDY CARPET', 'DOLLAR SHOP CRYSTALS', 'TORN LETTERS', 'COPPER CHAIN', 'PENCILS FRESHLY SHARPENED', 'BOUND SAGE', 'ONOMATOPAEIA', 'GRIMS TALES', 'FIRED BULLETS', 'RUSTED WIRE', 'CANDLE WAX', 'WATER', 'FIRE', 'AIR', 'EARTH', 'EASTERN LOWS', 'WESTERN HIGHS', 'EASTERN HIGHS', 'WESTERN LOWS', 'DOWN SOUTH', 'NORTHERN LIGHTS', 'ROUND AND ROUND', 'SYMBOLIC GESTURES', 'BLUNT APPRAISALS', 'CALLOUS LOOKS', 'PASSING DEADLINES', 'MORBID FASCINATION', 'BEACHBALLS', 'DRAGONFLIES', 'GLITTERING MARBLES', 'THEORETICAL PHYSICS', 'LIMITLESS APPROPRIATION', 'COPYRIGHT ISSUES', 'SONIC DISTURBANCES', 'CARBON WALKING', 'STYLISTIC INTERPRETATION', 'DAYDREAMS', 'LARGE JELLY BABIES', 'SHOELACES', '', 'SHAVED GINGER', 'RECKLESS APPLICATION', 'OPEN WONDER', 'BORING ETTIQUETTE', 'WILD IMAGINATION', 'CARRION', 'BISCUITS', 'DRY LEAVES', 'FIVE CENT PIECES', 'OPEN SOURCE CODE', 'MOTHERS TEARS', 'CAT FLUFF']
+place = ['IN MOSSY GLADE', 'ABOVE THE CITY SKYLINE', 'SWAMPED BY CRASHING WAVES', 'BESIDE THE COOL LAKE IN SPRING', 'WALKING THE OPEN PLAIN', 'BREAKING CONCRETE WALLS', 'IN DENSE WOODS WILD', 'LOCKED IN A WOOD CABIN IN ICELAND', 'AMONG THE APES', 'IN INFINITE DIMENSIONS', 'AMONG THE DIZZYING HEIGHTS', 'SHIPWRECKED - ISLAND OF THE MIND', 'ON SACRED GROUND', 'IN THE ARCTIC CIRCLE', 'IN PALACES UNKNOWN TO ENGINEERING', 'IN MORTAL PERIL', 'BENEATH DEEP BLUE', 'UNDER THE BLACK MOUNTAIN', 'ON WAVES BEYOND THE HORIZON', 'IN GOOD OLD NORTH FITZROY', 'IN FORESTS UNCONCIOUS', 'BY THE RIVER', 'DEEP UNDERGROUND', 'IN A WRITING COURSE', 'IN UTOPIA', 'BATHED BY LIGHT', 'AMONG THE THORNS', 'TO THE LIGHTHOUSE BORN', 'FIGHTING THE GOOD FIGHT', 'TROLLING HISTORY', 'CARVED IN ICE', 'THROUGH THE FIRE PRISM' , 'ALL SHOOK UP', 'DREAMING PERIL' , 'DRIFTING UNEASILY', 'PLOTS FALLING EMPIRES', 'SENSORY DEPRIVATION - OH!', 'DRUNK AND DISORDERLY', 'IN SYNAPSE KINGDOM', 'LATE NIGHTS ON THE PHONE' , 'SUMMONSED BY THE SHERIFF', 'LOST IN PART', 'HIBERNATING FOR A CHEEKY EON', 'CONCEALED IN A TENT ON THE COMMUNE' , 'BEHIND A CURTAIN OF JACKETS', 'CALLING FLIGHT PATHS' , 'SHOWING PRIVATE MESSAGES', 'RIGHT NOW IN YOUR INBOX', 'OBSERVING BLOCKCHAIN', 'RESTING IN A LOVELY DREAM OF SUNSHINE', 'CLUELESS AGAINST THE VOID', 'STEEPED IN COMPLEXITY', 'POLISHED TO EXTREME', 'ORBITING JUPITER', 'FLOATING IN DEEP SPACE', 'FORTED UP', 'HELD DEARLY', 'WARMED BY LOVE', 'IN ABANDONED SHOP WINDOWS', 'ON THE MERRY GO ROUND', 'WALKING SLOWLY ALONG THE PIER', 'FOLDING STILL WET LAUNDRY', 'BEHIND THE BATHROOM MIRROR', 'ON DISTANT MOONS', 'SURROUNDED BY INDOOR PLANTS', 'BENEATH THE APPLE TREE', 'COASTING ALONG IN OPEN WATER', 'ON SACRED GROUND', 'IN EASY BREEZE', 'THROUGH THE FIRE', 'FROZEN IN WINTER LAKE', 'UP THERE', 'DOWN AND OUT', 'ON THE RISE', 'GOING THROUGH THE MOTIONS', 'ROUND THE TWIST', 'SPELT OUT NICELY', 'ON THE CUSP', '', 'GONE TO BED', 'BY THE PATH', 'ON THE EDGE', 'IN THIN AIR', 'ON THE MANTELPIECE', 'BEFORE THE HEARTH', 'HOVERING OVER GREEN HILLSIDES', 'IN A CACTUS GARDEN']
+light_source = ['BLAZING FORTH', 'SILENTLY FLOATS', 'CALMS THE NIGHT', 'SHINING BRIGHTLY','FIGHTING SIRENS' ,'BOILING OVER', 'STREAMING VISIONS', 'POSTING WISDOM', 'PUPPETS FEELING', 'THROWING TAROT', 'PAINTS THE CIELING', 'TALKING LOUDLY', 'SINGING SWEETLY', 'PUSHING ANGRY', 'SMILING STUPIDLY', 'STOICLY INVERTED', 'LIMITED CAPACITY', 'DEFIES GRAVITY', 'PEARLING ERRUPTION', 'INSTANTLY INDIVIDUATES', 'GENTLY CONTEMPLATES', 'GROWS IN SYNERGY', 'ROWS FOR FREEDOM', 'IS JOYFULLY PRESENT', 'RAMBLES DRUNKENLY', 'FALLS DOWN', 'RISES UP', 'BENDS SIDEWAYS', '', 'GROWLS IN LOW FREQUENCY', 'MIRROR IMAGE', 'TOPICALLY SUGGESTS', 'BEGS YOUR PARDON', 'CLAWS EYES OUT', 'WINS THE CONTEST', 'LOSES THE CONTEST', 'ROLLS OVER', 'BEGINS AGAIN', 'PRESSES START ON GAME OVER', 'CONTROL ALT DELETE RESETS', 'READS YOUR MIND', 'TROLLING OPINIONS', 'RISES IN NEW SINCERITY', 'LIMITS PARAMETERS', 'OPENS THE GATES', 'SUPPORTS REVOLUTION', 'WRITES A LETTER', 'SPEAKS IN POETICS', 'WHISPERS NOTHING', 'LUSTS FOR A MOMENT', 'APPEARS CONCERNED', 'SHOUTS ABOUT POLITICS', 'STAYS IN BED', 'WRITES SONGS ABOUT EMPLOYMENT', 'CALLS THE SHOTS', 'CALLS THE COPS', 'CALLS OUT—NO ANSWER', 'CRAFTS SHAPES', 'STANDS BEHIND EMBLEMS', 'EXPLODES IN TIRADE', 'PACKS UP MOVES OUT', 'SLOWS DOWN', 'BURNS OUT', 'BUILDS A BRIDGE', 'BURNING BRIDGES', 'SUFFOCATES WITH CRITICISMS', 'BUZZES WITH COMPLEMENTS', 'PLANNING URGENTLY', 'BREAKING FREE', 'ON THE ROAD', 'WITH THE BAND', 'STRIKING DEEP', 'BRANCHING OVER', 'RADIATING WARMTH', 'HONESTLY TRYING', 'WORKED TO DEATH', 'SAILING THE SLIPSTREAM', 'TIMING THE CONTRACTIONS', 'WEAVING TALES', 'STITCHING DREAMS', 'PULLING THREADS', 'HEALING TOUCH', 'QUENCHING THIRST', 'HOLDING HANDS', 'SIGNING OFF', 'OPENING UP', 'CLOSING OFF', 'MUTATING INTO SOMETHING ELSE', 'REMAINS THE SAME', 'SWOONS', 'RECOILS AGHAST', 'WALKS', 'DANCES']
+inhabitants = ['PIECES', 'WORKERS', 'EYES', 'FANTASIES', 'LIFE PATHS', 'IONS', 'POINTS OF LIGHT', 'LOVERS', 'HEARTS', 'STROKES', 'MINDS', 'PATTERNS', 'RIPPLES', 'SPECTRUM', 'ZEROS & ONES', 'POLARITIES', 'SINGULARITY', 'ELECTRICITY ARCS', 'EARTH TREMORS', 'BEAMS', 'STORY', 'PARTICLES BEND', 'CARBON SKETCHES', 'TENDER MOMENTS', 'FAIRY TALES' , 'BRANCHES', 'WANDERING NOTES', 'COLLECTIVE UNCONCIOUS', 'MYSTIC GLANDS', 'CHANNEL', 'WATCHES', 'EGOS', 'COLOURS', 'TETRACHROMATS', 'DICE ROLLS', 'TRANSIT', 'EVENT', 'PEN MARKS', 'FOOTSTEPS', 'MARGINS', 'BEARDED HIPSTERS', 'SUBJECTS', 'I CHING READINGS', 'SHADOW', 'LIGHT BODY', 'FILM SCRIPTS', 'SOUNDS', 'UNCONCIOUS', 'VISIONARIES', 'DREAMERS', 'TRAVELERS', 'SILENCE', 'DUALITIES', 'INTENSITY', 'WOOD CARVINGS', 'POLYSTYRENE BOXES', 'CALCULATORS', 'IPHONES', 'CREDIT RATINGS', 'TAKEAWAY MENUS', 'TEA BREAKS', 'SLIPPER LINE UPS', 'BOOKMARKS', 'CARD TRICKS', 'MEDITATIONS', 'THOUGHT PROCESSES', 'IDEALISTIC TENDENCIES', 'FLANNELS', 'MOON PYRAMIDS', 'CONSPIRACIES', 'BREAKTHROUGHS', 'WAKE DREAMS', 'EPISODES', 'TRIVIA', 'NOTES AND ERRATA', 'HEART BEATS']
+
+
+
+function rand_range(maximum) {
+    "use strict";
+    return Math.floor(Math.random() * (maximum + 1));
+}
+function choose(array) {
+    "use strict";
+    return array[rand_range(array.length - 1)];
+}
+function stanza() {
+    "use strict";
+    return 'A CUP OF ' + choose(material) + '<br \>&nbsp;&nbsp;&nbsp;' + '<br \>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + choose(place) + '<br \>&nbsp;&nbsp;&nbsp;' + choose(light_source) + '<br \>&nbsp;&nbsp;&nbsp;' + '<br \>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SYNCHRONISING ' + choose(inhabitants) + '<br \>&nbsp;&nbsp;&nbsp;'
+}
+function litany() {
+    "use strict";
+    var last, text, main = document.getElementById('main');
+    if (8 > t) {
+        t += 1;
+    } else {
+        main.removeChild(document.getElementById('main').firstChild);
+    }
+    last = document.createElement('div');
+    last.innerHTML = stanza();
+    main.appendChild(last);
+}
+function produce_litany() {
+    "use strict";
+    litany();
+    setInterval(litany, 5000);
+}
+
+</script>
+  <title> A CUP CREATES </title>
+</head>
+
+<body onload="produce_litany();">
+
+<div id="info">
+<br /></h3>
+<br /></h3>
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;SEEKING EXPRESSION<br /></h3>
+      
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EMPTY VESSEL — FULL<br /></h3>
+    
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;REFLEX — DEFINED CARRYING<br /></h3>
+    
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OVERLAPPING MEANS AND OBJECT<br /></h3>
+    
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;EACH OCEANS LOST TO DREAM<br /></h3>
+    
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SKY CANVAS (SCAFFOLD)<br /></h3>
+    
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;MOUTH FOR WORDS (SOUNDS & SYMBOLS)<br /></h3>
+    
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HANGING IDEAS / TRADEABLE FRAMES<br /></h3>
+    
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;TRAVELLING OFF THE PAGE<br /></h3>
+    
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;THE READER AWAKES<br /></h3>
+   
+   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://www.loganramsay.com/">L^K^R</a><br />
+    
+</div>
+<div id="main"></div>
+</body>
+</html>
